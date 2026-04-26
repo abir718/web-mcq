@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>MCQ পরীক্ষা | Live MCQ™</title>
+    <meta name="description" content="Live MCQ™-এ MCQ পরীক্ষা দিন, বিষয়, অধ্যায় এবং সাবলেসন নির্বাচন করে ১০ মিনিটের টাইমারে পরীক্ষা শুরু করুন।">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3333FF',
+                        secondary: '#2A2C8D',
+                        accent: '#FF6600',
+                        headline: '#1C1C1D',
+                        body: '#546078',
+                        dark: '#39374A',
+                        light: '#FAF7F4',
+                        white: '#FFFFFF',
+                    },
+                    fontFamily: {
+                        'figtree': ['Figtree', 'sans-serif'],
+                        'space': ['Space Grotesk', 'sans-serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&family=Poppins:wght@500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .bg-fluid-gradient {
+            background: radial-gradient(circle at 80% 3%, #D2D2FF, rgba(255, 255, 255, 0) 35%),
+                radial-gradient(circle at 60% 60%, #FFE1CE, rgba(255, 255, 255, 0) 45%),
+                radial-gradient(circle at 36% 65%, #D2D2FF, rgba(255, 255, 255, 0) 9%);
+        }
+    </style>
+</head>
+
+<body class="antialiased overflow-x-hidden font-figtree text-body bg-[#F4F4FA]">
+    <header class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="flex items-center">
+                        <img src="https://web.livemcq.com/core/uploads/2025/07/Live-MCQ-Dark-Logo.png" alt="Live MCQ" class="h-10 w-auto">
+                    </a>
+                </div>
+                <nav class="hidden lg:flex space-x-8">
+                    <a href="index.html" class="text-headline hover:text-primary font-medium transition">আমাদের সম্পর্কে</a>
+                    <a href="features.html" class="text-headline hover:text-primary font-medium transition">ফিচারসমূহ</a>
+                    <a href="packages.html" class="text-headline hover:text-primary font-medium transition">প্যাকেজসমূহ</a>
+                    <a href="contact.html" class="text-headline hover:text-primary font-medium transition">যোগাযোগ</a>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <button class="hidden lg:block text-headline hover:text-primary">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                    <a href="login.html" class="bg-accent hover:bg-primary text-white px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg">লগইন</a>
+                    <button class="lg:hidden text-headline">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pb-16">
+        <section class="relative overflow-hidden bg-[#06074a] text-white pt-20 pb-20">
+            <div class="absolute inset-0 opacity-20 bg-fluid-gradient"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="lg:flex lg:items-center lg:justify-between gap-12">
+                    <div class="lg:w-2/3">
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-4">MCQ পরীক্ষা দিন</h1>
+                        <p class="text-lg text-gray-200 max-w-2xl">বিষয়, অধ্যায়, সাবলেসন নির্বাচন করে ১০ মিনিটের টাইমারে পরীক্ষার শুরু করুন। দ্রুত পরীক্ষা সম্পন্ন করে আপনার প্রস্তুতি যাচাই করুন।</p>
+                    </div>
+                    <div class="lg:w-1/3 bg-white/10 border border-white/20 rounded-3xl p-6 shadow-xl">
+                        <div class="text-sm uppercase tracking-[0.2em] text-white/70 mb-4">exam timer</div>
+                        <div class="text-5xl font-bold text-white text-center" id="timerDisplay">10:00</div>
+                        <p class="text-center text-sm text-gray-200 mt-3">টাইমার শুরু করুন এবং প্রতিটি প্রশ্নের জন্য সময় নিয়ন্ত্রণ করুন।</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+            <div class="grid lg:grid-cols-[1.2fr_1fr] gap-8">
+                <div class="bg-white rounded-3xl shadow-xl p-8">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-headline mb-4">পরীক্ষার প্রস্তুতি</h2>
+                        <p class="text-body leading-relaxed">নিচের ফর্ম থেকে বিষয়, অধ্যায় এবং সাবলেসন নির্বাচন করুন। সাবলেসন নির্বাচন করলে সিলেক্ট করা পরীক্ষার গাইড লাইন দেখতে পাবেন।</p>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-headline mb-2">বিষয়</label>
+                            <select id="subjectSelect" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-body focus:border-primary focus:ring-1 focus:ring-primary">
+                                <option value="">বিষয় নির্বাচন করুন</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-headline mb-2">অধ্যায়</label>
+                            <select id="chapterSelect" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-body focus:border-primary focus:ring-1 focus:ring-primary" disabled>
+                                <option value="">প্রথমে বিষয় নির্বাচন করুন</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-headline mb-2">সাবলেসন</label>
+                            <select id="lessonSelect" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-body focus:border-primary focus:ring-1 focus:ring-primary" disabled>
+                                <option value="">প্রথমে অধ্যায় নির্বাচন করুন</option>
+                            </select>
+                        </div>
+                        <div class="rounded-2xl bg-[#f7f8ff] border border-[#e9ebff] p-4">
+                            <p class="text-sm text-body"><span class="font-bold text-headline">নির্দেশনা:</span> সাবলেসন নির্বাচন করার পর <span class="text-primary">শুরু করুন</span> বাটনে ক্লিক করুন। টপ ডানের টাইমার পরীক্ষা শুরু হলে ১০ মিনিট থেকে ফিরে গোনবে।</p>
+                        </div>
+                        <button id="startExamButton" class="w-full bg-accent hover:bg-primary text-white py-3 rounded-full font-semibold transition duration-300 disabled:opacity-50" disabled>শুরু করুন</button>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-white rounded-3xl shadow-xl p-8">
+                        <h2 class="text-2xl font-bold text-headline mb-4">সিলেক্টেড লেসন</h2>
+                        <div class="space-y-4">
+                            <div class="rounded-2xl bg-[#f8f9ff] border border-[#e8eaf7] p-5">
+                                <p class="text-sm text-body">বিষয়: <span id="selectedSubject" class="font-semibold text-headline">--</span></p>
+                                <p class="text-sm text-body">অধ্যায়: <span id="selectedChapter" class="font-semibold text-headline">--</span></p>
+                                <p class="text-sm text-body">সাবলেসন: <span id="selectedLesson" class="font-semibold text-headline">--</span></p>
+                            </div>
+                            <div class="rounded-2xl bg-[#f8f9ff] border border-[#e8eaf7] p-5">
+                                <p class="text-sm text-body font-medium mb-2">লেসন বর্ণনা</p>
+                                <p id="lessonDescription" class="text-body text-sm leading-relaxed">লেসন নির্বাচন করুন ফলে পরীক্ষার বিস্তারিত দেখুন।</p>
+                            </div>
+                            <div class="rounded-3xl bg-[#06074a] text-white p-6">
+                                <h3 class="text-lg font-bold mb-3">পরীক্ষা প্রস্তুতি</h3>
+                                <p class="text-sm leading-relaxed">যেকোনো সময় প্রশ্নের উত্তর দিন এবং সময় চলে গেলে পরীক্ষা শেষ হবে। টেস্ট শেষে আপনি সঠিক উত্তর দেখতে পারবেন।</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden bg-white rounded-3xl shadow-xl p-8" id="resultCard">
+                        <h2 class="text-2xl font-bold text-headline mb-4">পরীক্ষার ফলাফল</h2>
+                        <p class="text-sm text-body mb-4">পরীক্ষা সম্পন্ন হওয়ার পরে আপনার সংগ্রহীত স্কোর দেখুন।</p>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="rounded-2xl bg-[#f8f9ff] p-5">
+                                <p class="text-3xl font-bold text-primary" id="scoreValue">0</p>
+                                <p class="text-sm text-body">সঠিক উত্তর</p>
+                            </div>
+                            <div class="rounded-2xl bg-[#f8f9ff] p-5">
+                                <p class="text-3xl font-bold text-primary" id="attemptValue">0</p>
+                                <p class="text-sm text-body">উত্তর</p>
+                            </div>
+                        </div>
+                        <button id="resetExamButton" class="mt-6 w-full text-primary border border-primary rounded-full py-3 hover:bg-primary/10 transition">প্রশ্ন নির্বাচন করুন</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 bg-white rounded-3xl shadow-xl p-8" id="examPanel" style="display:none;">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                    <div>
+                        <p class="text-sm text-body">পরীক্ষার সাবলেসন:</p>
+                        <h3 class="text-xl font-bold text-headline" id="examTitle">--</h3>
+                    </div>
+                    <div class="rounded-full bg-[#f7f8ff] px-5 py-3 border border-[#e9ebff] inline-flex items-center gap-3">
+                        <i class="fas fa-stopwatch text-primary"></i>
+                        <span class="font-semibold text-headline" id="examTimer">10:00</span>
+                    </div>
+                </div>
+                <div id="questionContainer" class="space-y-6"></div>
+                <div class="flex flex-wrap gap-3 mt-6">
+                    <button id="prevQuestionBtn" class="bg-[#f2f4ff] text-headline px-5 py-3 rounded-full hover:bg-[#e2e6ff] transition" disabled>পূর্ববর্তী</button>
+                    <button id="nextQuestionBtn" class="bg-[#f2f4ff] text-headline px-5 py-3 rounded-full hover:bg-[#e2e6ff] transition" disabled>পরবর্তী</button>
+                    <button id="submitExamBtn" class="ml-auto bg-primary hover:bg-secondary text-white px-5 py-3 rounded-full transition">পরীক্ষা জমা দিন</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#F9F9FB] pt-16 pb-8 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <img src="https://web.livemcq.com/core/uploads/2025/07/Live-MCQ-Dark-Logo.png" class="h-10 mb-4" alt="Logo">
+                    <p class="text-sm text-body mb-4">সকল সরকারি-বেসরকারি চাকরির পূর্ণাঙ্গ প্রস্তুতি নিন Live MCQ™ অ্যাপে।</p>
+                    <div class="flex items-center gap-2"><i class="fas fa-star text-yellow-400"></i><span class="font-bold">৪.৬</span><span class="text-sm">(১.৮ মিলিয়ন+ ডাউনলোড)</span></div>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">কুইক লিঙ্ক</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="hover:text-primary">হোম</a></li>
+                        <li><a href="#" class="hover:text-primary">বুক স্টোর</a></li>
+                        <li><a href="features.html" class="hover:text-primary">ফিচারসমূহ</a></li>
+                        <li><a href="packages.html" class="hover:text-primary">প্যাকেজসমূহ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">আরও জানুন</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-primary">সকল পোস্ট</a></li>
+                        <li><a href="#" class="hover:text-primary">সকল মেন্টর</a></li>
+                        <li><a href="index.html" class="hover:text-primary">আমাদের সম্পর্কে</a></li>
+                        <li><a href="faq.html" class="hover:text-primary">সাধারণ জিজ্ঞাসা</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">যোগাযোগ</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-phone-alt mr-2"></i> 01701-377322</li>
+                        <li><i class="fas fa-envelope mr-2"></i> contact@livemcq.com</li>
+                        <li><i class="fab fa-facebook mr-2"></i> facebook.com/livemcq</li>
+                        <li><i class="fab fa-youtube mr-2"></i> youtube.com/@LiveMCQ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-body">
+                <p>© স্বত্বাধিকার ২০১৭ - ২০২৬ | সর্বস্বত্ব সংরক্ষিত | <span class="text-accent">Career Hub</span> দ্বারা পরিচালিত</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-primary"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-primary"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-primary"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="hover:text-primary"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="hover:text-primary"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="hover:text-primary"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const subjects = {
+            'বাংলা': {
+                chapters: {
+                    'মানবসম্পদ': ['ব্যাকরণ', 'গদ্য', 'পদ্য'],
+                    'সাহিত্য': ['নবকথা', 'কাব্য', 'উপন্যাস']
+                }
+            },
+            'ইংরেজি': {
+                chapters: {
+                    'Grammar': ['Tenses', 'Sentence Structure'],
+                    'Vocabulary': ['Idioms', 'Synonyms']
+                }
+            },
+            'গণিত': {
+                chapters: {
+                    'অ্যালজেব্রা': ['সীমা', 'সমীকরণ'],
+                    'জ্যামিতি': ['ত্রিভুজ', 'বৃত্ত']
+                }
+            }
+        };
+
+        const lessonData = {
+            'ব্যাকরণ': { description: 'বাংলা ব্যাকরণ ভিত্তিক প্রশ্ন সমাধান করুন।' },
+            'গদ্য': { description: 'বাংলা গদ্য পাঠের উপর ভিত্তি করে প্রশ্ন।' },
+            'পদ্য': { description: 'বাংলা পদ্য ও ছন্দগত প্রশ্নের অনুশীলন।' },
+            'নবকথা': { description: 'বাংলা নন-ফিকশন লেখার ভিত্তিতে প্রশ্ন।' },
+            'কাব্য': { description: 'বাংলা কবিতা ও কবির জীবন সম্পর্কে MCQ।' },
+            'উপন্যাস': { description: 'বাংলা উপন্যাস এবং চরিত্র বিশ্লেষণ প্রশ্ন।' },
+            'Tenses': { description: 'ইংরেজি Tenses বিষয়ক MCQ অনুশীলন।' },
+            'Sentence Structure': { description: 'বাক্য গঠন ও সঠিক ইংরেজি ব্যবহার।' },
+            'Idioms': { description: 'ইংরেজি অর্থ ও ব্যবহার ভিত্তিক প্রশ্ন।' },
+            'Synonyms': { description: 'শব্দার্থ সমার্থক শব্দ অনুশীলন।' },
+            'সীমা': { description: 'অ্যালজেব্রার সীমা ও ধারার প্রশ্ন।' },
+            'সমীকরণ': { description: 'সমীকরণ ও অপ্রতিসম সমাধান অনুশীলন।' },
+            'ত্রিভুজ': { description: 'জ্যামিতি ত্রিভুজ ভিত্তিক MCQ প্রশ্ন।' },
+            'বৃত্ত': { description: 'বৃত্তের বৈশিষ্ট্য ও সমীকরণ প্রশ্ন।' }
+        };
+
+        const questions = {
+            'ব্যাকরণ': [
+                {
+                    question: 'বাংলা ব্যাকরণে কোনটি ক্রিয়া নয়?',
+                    options: ['খাওয়া', 'দৌড়ানো', 'লাল', 'বলতে'],
+                    answer: 2
+                },
+                {
+                    question: 'শুদ্ধ শব্দ কোনটি?',
+                    options: ['অদ্দ্য', 'অধ্য', 'অয্য', 'অধ্য'],
+                    answer: 3
+                }
+            ],
+            'গদ্য': [
+                {
+                    question: 'গদ্য কি ধরনের সাহিত্য?',
+                    options: ['স্বরচিত', 'গদ্য', 'পদ্', 'গীতি'],
+                    answer: 1
+                },
+                {
+                    question: 'গদ্যে আলোচনা কোন ফর্মে হয়?',
+                    options: ['চিত্রণ', 'সংলাপ', 'রচনাশৈলী', 'কলমের গতি'],
+                    answer: 2
+                }
+            ],
+            'পদ্য': [
+                {
+                    question: 'পদ্যরূপ কী?',
+                    options: ['কবিতা', 'গদ্য', 'প্রবন্ধ', 'উপন্যাস'],
+                    answer: 0
+                },
+                {
+                    question: 'কবিতার ছন্দ কোনটি?',
+                    options: ['বাণী', 'চোখ', 'সূরা', 'পদ্য'],
+                    answer: 3
+                }
+            ],
+            'Tenses': [
+                {
+                    question: 'He ____ to school yesterday.',
+                    options: ['go', 'went', 'gone', 'going'],
+                    answer: 1
+                },
+                {
+                    question: 'They ____ playing now.',
+                    options: ['is', 'are', 'was', 'were'],
+                    answer: 1
+                }
+            ],
+            'সমীকরণ': [
+                {
+                    question: '2x + 3 = 7 হলে x = ?',
+                    options: ['1', '2', '3', '4'],
+                    answer: 1
+                },
+                {
+                    question: 'x - 5 = 0 হলে x = ?',
+                    options: ['3', '5', '7', '0'],
+                    answer: 1
+                }
+            ]
+        };
+
+        const subjectSelect = document.getElementById('subjectSelect');
+        const chapterSelect = document.getElementById('chapterSelect');
+        const lessonSelect = document.getElementById('lessonSelect');
+        const startExamButton = document.getElementById('startExamButton');
+        const selectedSubject = document.getElementById('selectedSubject');
+        const selectedChapter = document.getElementById('selectedChapter');
+        const selectedLesson = document.getElementById('selectedLesson');
+        const lessonDescription = document.getElementById('lessonDescription');
+        const examPanel = document.getElementById('examPanel');
+        const timerDisplay = document.getElementById('examTimer');
+        const questionContainer = document.getElementById('questionContainer');
+        const prevQuestionBtn = document.getElementById('prevQuestionBtn');
+        const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+        const submitExamBtn = document.getElementById('submitExamBtn');
+        const resultCard = document.getElementById('resultCard');
+        const scoreValue = document.getElementById('scoreValue');
+        const attemptValue = document.getElementById('attemptValue');
+        const resetExamButton = document.getElementById('resetExamButton');
+        const examTitle = document.getElementById('examTitle');
+        const timerDisplayTop = document.getElementById('timerDisplay');
+
+        let selectedLessonKey = '';
+        let currentQuestionIndex = 0;
+        let selectedAnswers = [];
+        let examTimerInterval = null;
+        let timeRemaining = 600;
+
+        function populateSubjects() {
+            Object.keys(subjects).forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject;
+                option.textContent = subject;
+                subjectSelect.appendChild(option);
+            });
+        }
+
+        function populateChapters(subject) {
+            chapterSelect.innerHTML = '<option value="">অধ্যায় নির্বাচন করুন</option>';
+            lessonSelect.innerHTML = '<option value="">প্রথমে অধ্যায় নির্বাচন করুন</option>';
+            lessonSelect.disabled = true;
+            const chapters = subjects[subject]?.chapters || {};
+            Object.keys(chapters).forEach(chapter => {
+                const option = document.createElement('option');
+                option.value = chapter;
+                option.textContent = chapter;
+                chapterSelect.appendChild(option);
+            });
+            chapterSelect.disabled = false;
+        }
+
+        function populateLessons(subject, chapter) {
+            lessonSelect.innerHTML = '<option value="">সাবলেসন নির্বাচন করুন</option>';
+            const lessons = subjects[subject]?.chapters[chapter] || [];
+            lessons.forEach(lesson => {
+                const option = document.createElement('option');
+                option.value = lesson;
+                option.textContent = lesson;
+                lessonSelect.appendChild(option);
+            });
+            lessonSelect.disabled = false;
+        }
+
+        function updateSelectionInfo() {
+            selectedSubject.textContent = subjectSelect.value || '--';
+            selectedChapter.textContent = chapterSelect.value || '--';
+            selectedLesson.textContent = lessonSelect.value || '--';
+            lessonDescription.textContent = lessonData[lessonSelect.value]?.description || 'লেসন নির্বাচন করুন ফলে পরীক্ষার বিস্তারিত দেখুন।';
+            startExamButton.disabled = !lessonSelect.value;
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const secs = (seconds % 60).toString().padStart(2, '0');
+            return `${minutes}:${secs}`;
+        }
+
+        function startTimer() {
+            timeRemaining = 600;
+            timerDisplay.textContent = formatTime(timeRemaining);
+            timerDisplayTop.textContent = formatTime(timeRemaining);
+            if (examTimerInterval) clearInterval(examTimerInterval);
+            examTimerInterval = setInterval(() => {
+                timeRemaining -= 1;
+                timerDisplay.textContent = formatTime(timeRemaining);
+                timerDisplayTop.textContent = formatTime(timeRemaining);
+                if (timeRemaining <= 0) {
+                    clearInterval(examTimerInterval);
+                    submitExam();
+                }
+            }, 1000);
+        }
+
+        function loadQuestions() {
+            selectedLessonKey = lessonSelect.value;
+            const questionList = questions[selectedLessonKey] || [];
+            selectedAnswers = Array(questionList.length).fill(null);
+            currentQuestionIndex = 0;
+            renderQuestion();
+            prevQuestionBtn.disabled = true;
+            nextQuestionBtn.disabled = questionList.length <= 1;
+            examTitle.textContent = `${selectedLessonKey} - MCQ পরীক্ষা`;
+            examPanel.style.display = 'block';
+            resultCard.classList.add('hidden');
+        }
+
+        function renderQuestion() {
+            const questionList = questions[selectedLessonKey] || [];
+            const question = questionList[currentQuestionIndex];
+            if (!question) {
+                questionContainer.innerHTML = '<p class="text-body">কোন প্রশ্ন পাওয়া যায়নি।</p>';
+                return;
+            }
+            questionContainer.innerHTML = `
+                <div class="rounded-3xl border border-[#e9ebff] p-6 bg-[#f8f9ff]">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-body">প্রশ্ন ${currentQuestionIndex + 1} / ${questionList.length}</span>
+                        <span class="text-sm font-semibold text-headline">${selectedLessonKey}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-headline mb-4">${question.question}</h3>
+                    <div class="space-y-3">
+                        ${question.options.map((option, index) => `
+                            <label class="block rounded-2xl border border-gray-200 p-4 cursor-pointer hover:border-primary">
+                                <input type="radio" name="answer" value="${index}" class="mr-3 text-primary" ${selectedAnswers[currentQuestionIndex] === index ? 'checked' : ''}>
+                                <span class="text-body">${option}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            document.querySelectorAll('input[name="answer"]').forEach(input => {
+                input.addEventListener('change', () => {
+                    selectedAnswers[currentQuestionIndex] = Number(input.value);
+                });
+            });
+        }
+
+        function submitExam() {
+            clearInterval(examTimerInterval);
+            const questionList = questions[selectedLessonKey] || [];
+            let score = 0;
+            questionList.forEach((question, index) => {
+                if (selectedAnswers[index] === question.answer) score += 1;
+            });
+            scoreValue.textContent = score;
+            attemptValue.textContent = selectedAnswers.filter(ans => ans !== null).length;
+            resultCard.classList.remove('hidden');
+            examPanel.style.display = 'none';
+        }
+
+        subjectSelect.addEventListener('change', () => {
+            const subject = subjectSelect.value;
+            if (subject) {
+                populateChapters(subject);
+            } else {
+                chapterSelect.innerHTML = '<option value="">প্রথমে বিষয় নির্বাচন করুন</option>';
+                chapterSelect.disabled = true;
+                lessonSelect.innerHTML = '<option value="">প্রথমে অধ্যায় নির্বাচন করুন</option>';
+                lessonSelect.disabled = true;
+            }
+            updateSelectionInfo();
+        });
+
+        chapterSelect.addEventListener('change', () => {
+            const subject = subjectSelect.value;
+            const chapter = chapterSelect.value;
+            if (chapter) {
+                populateLessons(subject, chapter);
+            } else {
+                lessonSelect.innerHTML = '<option value="">প্রথমে অধ্যায় নির্বাচন করুন</option>';
+                lessonSelect.disabled = true;
+            }
+            updateSelectionInfo();
+        });
+
+        lessonSelect.addEventListener('change', updateSelectionInfo);
+
+        startExamButton.addEventListener('click', () => {
+            if (!lessonSelect.value) return;
+            selectedSubject.textContent = subjectSelect.value;
+            selectedChapter.textContent = chapterSelect.value;
+            selectedLesson.textContent = lessonSelect.value;
+            lessonDescription.textContent = lessonData[lessonSelect.value]?.description || 'লেসন নির্বাচন করুন ফলে পরীক্ষার বিস্তারিত দেখুন।';
+            loadQuestions();
+            startTimer();
+        });
+
+        prevQuestionBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex -= 1;
+                renderQuestion();
+                nextQuestionBtn.disabled = false;
+                prevQuestionBtn.disabled = currentQuestionIndex === 0;
+            }
+        });
+
+        nextQuestionBtn.addEventListener('click', () => {
+            const questionList = questions[selectedLessonKey] || [];
+            if (currentQuestionIndex < questionList.length - 1) {
+                currentQuestionIndex += 1;
+                renderQuestion();
+                prevQuestionBtn.disabled = false;
+                nextQuestionBtn.disabled = currentQuestionIndex === questionList.length - 1;
+            }
+        });
+
+        submitExamBtn.addEventListener('click', submitExam);
+        resetExamButton.addEventListener('click', () => location.reload());
+
+        populateSubjects();
+    </script>
+</body>
+
+</html>
